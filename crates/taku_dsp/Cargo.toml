@@ -1,0 +1,9 @@
+[package]
+name = "taku_dsp"
+version = "0.1.0"
+edition = "2021"
+description = "Modular audio processing DSP library - core audio effects"
+
+[lib]
+name = "taku_dsp"
+path = "src/lib.rs"

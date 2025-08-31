@@ -1,0 +1,60 @@
+# OS-Level
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.DS_Store
+.fseventsd
+.VolumeIcon.icns
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*.so
+*.out
+*.o
+*.a
+
+# JavaScript (React.js)
+.yarn/
+.next/
+node_modules/
+build/
+dist/
+*.log
+*.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python (FastAPI, Uvicorn)
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+instance/
+*.db
+*.sqlite3
+# *.env # Duplicate
+*.venv
+.venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+
+# Rust (Winit, Wry, etc.)
+target
+Cargo.lock
+*.rs.bk

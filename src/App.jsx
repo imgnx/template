@@ -4,7 +4,6 @@ export default function App() {
   const [bits, setBits] = useState(12);
   const [rate, setRate] = useState(16000);
   const [health, setHealth] = useState('unknown');
-  const [dspStatus, setDspStatus] = useState('');
 
   const ping = async () => {
     const r = await fetch('/api/health');
@@ -12,26 +11,11 @@ export default function App() {
     setHealth(j.status);
   };
 
-  const startRustDSP = async () => {
-    setDspStatus('Starting...');
-    try {
-      const r = await fetch('/api/bitcrush', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bits, rate })
-      });
-      if (!r.ok) throw new Error('Failed to start DSP');
-      const j = await r.json();
-      setDspStatus(j.status || 'DSP started!');
-    } catch (e) {
-      setDspStatus('Error: ' + e.message);
-    }
-  };
-
   return (
     <div style={{ fontFamily: 'system-ui', padding: 16 }}>
-      <h1>Taku Bitcrusher</h1>
-      <p>Scaffold: React → FastAPI → Rust</p>
+      <h1>Taku Audio Processing</h1>
+      <p>Modular Audio Framework: React → FastAPI → Rust</p>
+      <p><em>Current Module: Bitcrusher</em></p>
 
       <section>
         <label>Bits: {bits}</label>
@@ -48,12 +32,9 @@ export default function App() {
         <span>health: {health}</span>
       </div>
 
-      <div style={{ marginTop: 24 }}>
-        <button onClick={startRustDSP}>Start Rust DSP</button>
-        {dspStatus && (
-          <span style={{ marginLeft: 12, opacity: 0.8 }}>{dspStatus}</span>
-        )}
-      </div>
+      <p style={{ opacity: 0.7, marginTop: 24 }}>
+        TODO: wire /api/bitcrush to Rust DSP once ready.
+      </p>
     </div>
   );
 }

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-app = FastAPI(title="Taku Bitcrusher API", version="0.1.0")
+app = FastAPI(title="Taku Audio Processing API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
