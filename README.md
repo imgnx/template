@@ -7,6 +7,39 @@ A modular audio processing framework supporting multiple audio effects and tools
 
 **Stack**: React (Webpack) • FastAPI • Rust (CLI/DSP)
 
+## 🚀 Taku Build System (LAUNCHER.lisp)
+
+The Taku framework includes a comprehensive LISP-based build system for managing all components:
+
+```bash
+# Quick start - development environment
+./LAUNCHER.lisp dev                    # Start all modules (modular UI)
+./LAUNCHER.lisp dev bitcrusher         # Start bitcrusher only
+./LAUNCHER.lisp dev tuner              # Start tuner only
+
+# Build system
+./LAUNCHER.lisp build rust             # Build Rust components
+./LAUNCHER.lisp build frontend         # Build all frontend targets
+./LAUNCHER.lisp build all              # Build everything
+
+# Code generation
+./LAUNCHER.lisp generate reverb rust-crate           # Generate new Rust DSP module
+./LAUNCHER.lisp generate reverb frontend-component   # Generate new React component
+./LAUNCHER.lisp generate reverb api-endpoints        # Generate FastAPI endpoints
+
+# System management
+./LAUNCHER.lisp status                 # Check system health
+./LAUNCHER.lisp clean                  # Clean build artifacts
+./LAUNCHER.lisp tmux bitcrusher        # Launch in tmux session
+```
+
+## Module Architecture
+
+- **🎛️ Bitcrusher**: Lo-fi degradation effects (active)
+- **🎵 Tuner**: Real-time pitch detection (active) 
+- **🌊 Reverb**: Space and ambience effects (planned)
+- **🎚️ EQ**: Parametric equalizer (planned)
+
 ## Dev
 
 ### Individual Modules
