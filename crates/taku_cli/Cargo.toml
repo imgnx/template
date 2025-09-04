@@ -7,3 +7,5 @@ description = "Command-line interface for Taku audio processing modules"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 taku_dsp = { path = "../taku_dsp" }
+winit = "0.28"
+wry = "0.21"
