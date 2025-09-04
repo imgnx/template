@@ -1,0 +1,32 @@
+name: frontend-modular
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+      - name: Build (modular)
+        run: BUILD_TARGET=modular npm run build
+      - name: Upload dist artifact (modular)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-modular-${{ github.sha }}
+          path: |
+            dist/**
+            antefinem/dist/**
+

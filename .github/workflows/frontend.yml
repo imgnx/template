@@ -8,7 +8,11 @@ on:
 
 jobs:
   build:
+    name: build (${{ matrix.target }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [modular, bitcrusher, tuner]
     defaults:
       run:
         shell: bash
@@ -29,16 +33,15 @@ jobs:
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-      - name: Build (modular)
+      - name: Build (${{ matrix.target }})
         run: |
-          BUILD_TARGET=modular npm run build
+          BUILD_TARGET=${{ matrix.target }} npm run build
 
-      - name: Upload dist artifact
+      - name: Upload dist artifact (${{ matrix.target }})
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: dist-${{ github.sha }}
+          name: dist-${{ matrix.target }}-${{ github.sha }}
           path: |
             dist/**
             antefinem/dist/**
-

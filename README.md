@@ -1,8 +1,12 @@
 # Taku Modular Audio Processing
 
-[![Frontend](https://img.shields.io/github/actions/workflow/status/imgnx/template/frontend.yml?label=frontend&logo=react)](https://github.com/imgnx/template/actions/workflows/frontend.yml)
+[![Frontend](https://img.shields.io/github/actions/workflow/status/imgnx/template/frontend.yml?label=frontend%20(matrix)&logo=react)](https://github.com/imgnx/template/actions/workflows/frontend.yml)
+[![FE: modular](https://img.shields.io/github/actions/workflow/status/imgnx/template/frontend-modular.yml?label=fe%3A%20modular&logo=react)](https://github.com/imgnx/template/actions/workflows/frontend-modular.yml)
+[![FE: bitcrusher](https://img.shields.io/github/actions/workflow/status/imgnx/template/frontend-bitcrusher.yml?label=fe%3A%20bitcrusher&logo=react)](https://github.com/imgnx/template/actions/workflows/frontend-bitcrusher.yml)
+[![FE: tuner](https://img.shields.io/github/actions/workflow/status/imgnx/template/frontend-tuner.yml?label=fe%3A%20tuner&logo=react)](https://github.com/imgnx/template/actions/workflows/frontend-tuner.yml)
 [![Backend](https://img.shields.io/github/actions/workflow/status/imgnx/template/backend.yml?label=backend&logo=fastapi)](https://github.com/imgnx/template/actions/workflows/backend.yml)
 [![Rust](https://img.shields.io/github/actions/workflow/status/imgnx/template/rust.yml?label=rust&logo=rust)](https://github.com/imgnx/template/actions/workflows/rust.yml)
+[![Lisp](https://img.shields.io/github/actions/workflow/status/imgnx/template/lisp.yml?label=lisp)](https://github.com/imgnx/template/actions/workflows/lisp.yml)
 
 A modular audio processing framework supporting multiple audio effects and tools. Currently includes:
 - **Bitcrusher**: Lo-fi audio degradation effects
@@ -148,4 +152,12 @@ Build a single module bundle (no router required):
 ```
 ./LAUNCHER module bitcrusher
 ./LAUNCHER module tuner
+```
+
+### Dev a single module
+Start backend + module dev server only:
+
+```
+./LAUNCHER dev-module bitcrusher
+./LAUNCHER dev-module tuner
 ```

@@ -27,3 +27,9 @@
   - `./LAUNCHER module bitcrusher`
   - `./LAUNCHER module tuner`
 - This runs `npm run build:<module>` under the hood (no router required).
+
+## Dev only a single module
+- Run backend + frontend dev server for one module:
+  - `./LAUNCHER dev-module bitcrusher`
+  - `./LAUNCHER dev-module tuner`
+- Equivalent to `./LAUNCHER dev <name>`, provided for clarity.

@@ -91,6 +91,12 @@
       (error "module requires: NAME (e.g., bitcrusher)")
       (build-module (first args))))
 
+;; Dev only a single module (backend + dev server) e.g., `./LAUNCHER dev-module bitcrusher`
+(defun cmd-dev-module (args)
+  (if (or (null args) (null (first args)))
+      (error "dev-module requires: NAME (e.g., bitcrusher)")
+      (dev-single-module (first args))))
+
 (defun cmd-generate (module-name type)
   (echo "⚡ Generating code for " module-name "...")
   (case (intern (string-upcase type) :keyword)
@@ -137,6 +143,7 @@
       (:DEV (cmd-dev args))
       (:BUILD (cmd-build args))
       (:MODULE (cmd-module args))
+      (:DEV-MODULE (cmd-dev-module args))
       (:GENERATE (if (< (length args) 2)
                      (error "generate requires: MODULE TYPE")
                      (cmd-generate (first args) (second args))))
