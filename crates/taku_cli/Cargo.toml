@@ -7,5 +7,9 @@ description = "Command-line interface for Taku audio processing modules"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 taku_dsp = { path = "../taku_dsp" }
-winit = "0.28"
-wry = "0.21"
+winit = "0.30"
+wry = "0.52.1"
+
+[[bin]]
+name = "dev_view"
+path = "src/bin/dev_view.rs"

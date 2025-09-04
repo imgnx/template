@@ -151,15 +151,25 @@
       (success-echo "Frontend build complete: " target)
       (error-echo "Frontend build failed: " target))))
 
+;;; Build a single named module (frontend-only)
+(defun build-module (module-name)
+  "Build only the specified module's frontend target.
+Encourages router-less, module-scoped apps."
+  (let* ((name-str (string-downcase (princ-to-string module-name)))
+         (kw (intern (string-upcase name-str) :keyword)))
+    (validate-module kw)
+    (echo "Building module (frontend only): " name-str)
+    (build-frontend-target name-str)))
+
 ;;; =============================================================================
 ;;; BACKEND MANAGEMENT
 ;;; =============================================================================
 
 (defun start-backend (&key (root (repo-root)))
-  "Start FastAPI backend server"
+  "Start FastAPI backend server (retrofinem/app)"
   (ensure-bins "python")
-  (spawn '("python" "-m" "uvicorn" "app.main:app" "--reload" "--port" "8000") 
-         :dir root))
+  (spawn '("python" "-m" "uvicorn" "app.main:app" "--reload" "--port" "8000")
+         :dir (subdir root "retrofinem/")))
 
 (defun stop-backend ()
   "Stop backend server (if running)"
@@ -218,17 +228,31 @@
 (defun tmux-dev (&key (root (repo-root)) (target "modular"))
   "Create tmux development session"
   (let ((session-name (format nil "taku-~a" target))
-        (cmd1 (list "tmux" "new-session" "-d" "-s" session-name "-c" "." 
-                   "python -m uvicorn app.main:app --reload --port 8000"))
+        (cmd1 (list "tmux" "new-session" "-d" "-s" session-name "-c"
+                    (namestring (subdir root "retrofinem/"))
+                    "python -m uvicorn app.main:app --reload --port 8000"))
         (cmd2 (list "tmux" "split-window" "-h" "-t" (format nil "~a:0" session-name) 
-                   "-c" "." (format nil "npm run dev:~a" target)))
-        (cmd3 (list "tmux" "select-layout" "-t" (format nil "~a:0" session-name) 
-                   "even-horizontal"))
-        (cmd4 (list "tmux" "set-option" "-t" session-name "mouse" "on"))
-        (cmd5 (list "tmux" "attach-session" "-t" session-name)))
+                   "-c" (namestring root) (format nil "npm run dev:~a" target)))
+        (cmd3 (list "tmux" "split-window" "-v" "-t" (format nil "~a:0" session-name)
+                    "-c" (namestring root)
+                    "cargo run -p taku_cli --bin dev_view"))
+        (cmd4 (list "tmux" "select-layout" "-t" (format nil "~a:0" session-name) 
+                   "tiled"))
+        (cmd5 (list "tmux" "set-option" "-t" session-name "mouse" "on"))
+        (cmd6 (list "tmux" "attach-session" "-t" session-name)))
     
-    (dolist (cmd (list cmd1 cmd2 cmd3 cmd4 cmd5))
+    (dolist (cmd (list cmd1 cmd2 cmd3 cmd4 cmd5 cmd6))
       (spawn cmd :dir root))))
+
+;;; =============================================================================
+;;; WEBVIEW (WRY) LAUNCHER
+;;; =============================================================================
+
+(defun start-webview (&key (root (repo-root)) (url "http://127.0.0.1:8080"))
+  "Start a Wry-based webview pointed at the frontend URL."
+  (ensure-bins "cargo")
+  (spawn (list "cargo" "run" "-p" "taku_cli" "--bin" "dev_view" "--" url)
+         :dir root))
 
 ;;; =============================================================================
 ;;; CLEANUP UTILITIES

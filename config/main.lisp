@@ -85,6 +85,12 @@
       (dolist (target targets)
         (build-component target))))
 
+;; Build only a single module's frontend bundle (e.g., `./LAUNCHER module bitcrusher`).
+(defun cmd-module (args)
+  (if (or (null args) (null (first args)))
+      (error "module requires: NAME (e.g., bitcrusher)")
+      (build-module (first args))))
+
 (defun cmd-generate (module-name type)
   (echo "⚡ Generating code for " module-name "...")
   (case (intern (string-upcase type) :keyword)
@@ -130,6 +136,7 @@
     (case cmd
       (:DEV (cmd-dev args))
       (:BUILD (cmd-build args))
+      (:MODULE (cmd-module args))
       (:GENERATE (if (< (length args) 2)
                      (error "generate requires: MODULE TYPE")
                      (cmd-generate (first args) (second args))))

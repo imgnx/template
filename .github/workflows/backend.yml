@@ -1,0 +1,36 @@
+name: backend
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: retrofinem/requirements.txt
+
+      - name: Install backend requirements
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f retrofinem/requirements.txt ]; then pip install -r retrofinem/requirements.txt; fi
+
+      - name: Import FastAPI app (smoke)
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'retrofinem')
+          import app.main as m
+          print('FastAPI app import OK:', hasattr(m, 'app'))
+          PY
+
